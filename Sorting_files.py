@@ -26,8 +26,12 @@ if ("exe") in extenions.values() and os.path.isdir(path + '\Applications') == Fa
     os.mkdir(path + "\Applications")
 
 tempList = list(set(extenions.values()) - set(others))
+if "" in tempList:
+    tempList.remove("")
+    
 if (tempList not in others) and os.path.isdir(path + '\Others') == False:
     os.mkdir(path + "\Others")
+
 
 #moves individual file to its respective folder
 for key, value in extenions.items():
