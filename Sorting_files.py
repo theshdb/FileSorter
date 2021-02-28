@@ -28,7 +28,7 @@ if ("exe") in extenions.values() and os.path.isdir(path + '\Applications') == Fa
 tempList = list(set(extenions.values()) - set(others))
 if "" in tempList:
     tempList.remove("")
-    
+
 if (tempList not in others) and os.path.isdir(path + '\Others') == False:
     os.mkdir(path + "\Others")
 
@@ -43,3 +43,5 @@ for key, value in extenions.items():
         shutil.move(path+"\\"+key,path+"\\Applications\\"+key)
     elif value in tempList:
         shutil.move(path+"\\"+key,path+"\\Others\\"+key)
+        
+print("FILES SORTED!")
