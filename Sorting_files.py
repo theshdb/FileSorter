@@ -2,8 +2,9 @@ import shutil
 import os
 
 #initializing extrensoins
-textExtensions = {"txt","pdf", "docx", "xlsx", "ppt"}
-imageExtensions = {"jfif", "png", "jpg", "jpeg"}
+textExtensions = ["txt","pdf", "docx", "xlsx", "ppt"]
+imageExtensions = ["jfif", "png", "jpg", "jpeg"]
+others = ["txt","pdf", "doc", "docx", "xlsx", "ppt", "jfif", "png", "jpg", "jpeg", "exe"]
 
 #Takes concerned path
 path = input("Enter the path : ")
@@ -12,19 +13,11 @@ path = input("Enter the path : ")
 allFiles = os.listdir(path)
 
 extenions = {}
-#gathers all extensions of files present in allFiles
+#gathers all extensions of files present in list allFiles
 for f in allFiles:
     extenions[f] = os.path.splitext(f)[1][1:]
 
-#replaces space with _ in file names
-for file in allFiles:
-    if " " in file and os.path.isfile(file) == True:
-        tempPath = path + "/" + file 
-        os.rename(tempPath, tempPath.replace(" ", "_"))
-
-newAllFiles = os.listdir(path)
-
-#Creates folder for repective file types if present
+#Creates folder for particular file type if present
 if  any(x in textExtensions for x in extenions.values()) == True and os.path.isdir(path + '\Text Documents') == False:
     os.mkdir(path + "\Text Documents")
 if  any(x in imageExtensions for x in extenions.values()) == True and os.path.isdir(path + '\Images') == False:
@@ -32,11 +25,17 @@ if  any(x in imageExtensions for x in extenions.values()) == True and os.path.is
 if ("exe") in extenions.values() and os.path.isdir(path + '\Applications') == False:
     os.mkdir(path + "\Applications")
 
+tempList = list(set(extenions.values()) - set(others))
+if (tempList not in others) and os.path.isdir(path + '\Others') == False:
+    os.mkdir(path + "\Others")
+
 #moves individual file to its respective folder
-for file in newAllFiles:
-    if os.path.splitext(file)[1][1:] in textExtensions:
-        shutil.move(path+"\\"+file,path+"\\Text Documents\\"+file)
-    if os.path.splitext(file)[1][1:] in imageExtensions:
-        shutil.move(path+"\\"+file,path+"\\Images\\"+file)
-    if os.path.splitext(file)[1][1:] == "exe":
-        shutil.move(path+"\\"+file,path+"\\Applications\\"+file)
+for key, value in extenions.items():
+    if value in textExtensions:
+        shutil.move(path+"\\"+key,path+"\\Text Documents\\"+key)
+    elif value in imageExtensions:
+        shutil.move(path+"\\"+key,path+"\\Images\\"+key)
+    elif value == 'exe':
+        shutil.move(path+"\\"+key,path+"\\Applications\\"+key)
+    elif value in tempList:
+        shutil.move(path+"\\"+key,path+"\\Others\\"+key)
