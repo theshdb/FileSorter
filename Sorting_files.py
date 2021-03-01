@@ -2,7 +2,7 @@ import shutil
 import os
 
 #initializing extrensoins
-textExtensions = ["txt","pdf", "docx", "xlsx", "ppt"]
+textExtensions = ["txt","pdf", "docx", "xlsx", "ppt", "doc"]
 imageExtensions = ["jfif", "png", "jpg", "jpeg"]
 others = ["txt","pdf", "doc", "docx", "xlsx", "ppt", "jfif", "png", "jpg", "jpeg", "exe"]
 
